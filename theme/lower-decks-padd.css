@@ -1,0 +1,193 @@
+:root {
+  --lcars-deep-blue: #05152b;
+  --lcars-hull: #142942;
+  --lcars-orange: #f79a3e;
+  --lcars-gold: #ffd766;
+  --lcars-rose: #ff7d9a;
+  --lcars-cyan: #4bd5ff;
+  --lcars-panel: rgba(10, 24, 46, 0.88);
+  --lcars-sheen: rgba(255, 255, 255, 0.12);
+  --lcars-dark: rgba(3, 8, 18, 0.85);
+  --lcars-black: #01050f;
+  --lcars-border: rgba(255, 255, 255, 0.06);
+  --lcars-pill-radius: 4.5rem;
+  --lcars-transition: 180ms ease-out;
+}
+
+body.wrap-all {
+  background: radial-gradient(circle at 15% 20%, rgba(20, 41, 66, 0.45), transparent 65%),
+    radial-gradient(circle at 80% 10%, rgba(20, 41, 66, 0.35), transparent 55%),
+    var(--lcars-deep-blue);
+  color: #f2f7ff;
+  font-family: "Rajdhani", "Space Grotesk", system-ui, sans-serif;
+}
+
+.wrap-all,
+.wrap-all * {
+  -webkit-font-smoothing: antialiased;
+}
+
+.lcars-hull {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.left-frame {
+  width: clamp(160px, 16vw, 220px);
+  background: linear-gradient(180deg, rgba(10, 29, 56, 0.94) 0%, rgba(3, 10, 24, 0.88) 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.left-frame::before,
+.left-frame::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  height: 4.5rem;
+  border-radius: var(--lcars-pill-radius);
+  background: linear-gradient(90deg, var(--lcars-orange), var(--lcars-rose));
+  opacity: 0.65;
+}
+
+.left-frame::before {
+  top: 1.75rem;
+}
+
+.left-frame::after {
+  bottom: 1.75rem;
+}
+
+.left-frame .bar-panel {
+  flex: 1;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(247, 154, 62, 0.16), transparent);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 7rem 0;
+}
+
+.lcars-main {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.banner {
+  position: relative;
+  background: linear-gradient(90deg, rgba(247, 154, 62, 0.55), transparent 70%);
+  padding-right: clamp(1.5rem, 4vw, 4rem);
+}
+
+.banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(80px, 12vw, 180px);
+  height: 100%;
+  background: linear-gradient(180deg, rgba(75, 213, 255, 0.45), transparent 70%);
+  mask-image: radial-gradient(circle at 0% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 80%);
+  pointer-events: none;
+}
+
+.control-stack {
+  position: absolute;
+  top: clamp(1.5rem, 3vw, 2.5rem);
+  right: clamp(1.5rem, 3vw, 3rem);
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  z-index: 2;
+}
+
+.lcars-button {
+  position: relative;
+  padding: 0.55rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(90deg, rgba(75, 213, 255, 0.7), rgba(255, 215, 102, 0.65));
+  color: #05152b;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: transform var(--lcars-transition), box-shadow var(--lcars-transition);
+  box-shadow: 0 12px 30px -18px rgba(75, 213, 255, 0.65);
+}
+
+.lcars-button:hover,
+.lcars-button:focus-visible {
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: 0 18px 40px -16px rgba(255, 215, 102, 0.75);
+}
+
+.lcars-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  opacity: 0;
+  transition: opacity var(--lcars-transition);
+}
+
+.lcars-button:focus-visible::after {
+  opacity: 1;
+}
+
+.bar-panel {
+  border-radius: 2.5rem 2.5rem 0 0;
+  background: linear-gradient(180deg, rgba(20, 41, 66, 0.42) 0%, rgba(5, 15, 30, 0.7) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(28px);
+}
+
+.lcars-pad {
+  padding: clamp(1.25rem, 2vw, 2.25rem) clamp(1.75rem, 3vw, 3rem);
+}
+
+@media (max-width: 960px) {
+  .lcars-hull {
+    flex-direction: column;
+  }
+
+  .left-frame {
+    width: 100%;
+    height: 140px;
+    flex-direction: row;
+    align-items: center;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .left-frame::before,
+  .left-frame::after {
+    display: none;
+  }
+
+  .left-frame .bar-panel {
+    display: none;
+  }
+
+  .control-stack {
+    position: static;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .banner::after {
+    display: none;
+  }
+}
