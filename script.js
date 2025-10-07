@@ -419,8 +419,7 @@ track?.addEventListener("pointermove", (event) => {
 
 const releaseTrackPointer = () => {
   if (!isTrackPointerDown || !track) return;
-  const draggedDistance = Math.abs(track.scrollLeft - trackPointerScrollStart);
-  const didDrag = draggedDistance > TRACK_DRAG_THRESHOLD;
+  const didDrag = trackWasDragged;
   isTrackPointerDown = false;
   if (trackPointerCaptured && trackPointerId !== null) {
     try {
@@ -433,10 +432,9 @@ const releaseTrackPointer = () => {
   trackPointerCaptured = false;
   track.classList.remove("dragging");
   if (didDrag) {
-    trackWasDragged = true;
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       trackWasDragged = false;
-    }, 0);
+    });
   } else {
     trackWasDragged = false;
   }
