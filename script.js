@@ -33,6 +33,8 @@ let trackPointerId = null;
 let trackPointerStartX = 0;
 let trackPointerScrollStart = 0;
 let trackWasDragged = false;
+let trackPointerCaptured = false;
+const TRACK_DRAG_THRESHOLD = 12;
 
 const defaultContacts = [
   {
@@ -392,34 +394,52 @@ track?.addEventListener("pointerdown", (event) => {
   trackPointerId = event.pointerId;
   trackPointerStartX = event.clientX;
   trackPointerScrollStart = track.scrollLeft;
-  track.setPointerCapture?.(trackPointerId);
-  track.classList.add("dragging");
+  trackPointerCaptured = false;
+  track.classList.remove("dragging");
 });
 
 track?.addEventListener("pointermove", (event) => {
   if (!isTrackPointerDown || !track) return;
   const deltaX = event.clientX - trackPointerStartX;
-  if (Math.abs(deltaX) > 3) {
-    trackWasDragged = true;
+  if (Math.abs(deltaX) < TRACK_DRAG_THRESHOLD) {
+    return;
   }
+  if (!trackPointerCaptured && trackPointerId !== null) {
+    try {
+      track.setPointerCapture?.(trackPointerId);
+      trackPointerCaptured = true;
+    } catch (error) {
+      trackPointerCaptured = false;
+    }
+  }
+  track.classList.add("dragging");
+  trackWasDragged = true;
   track.scrollLeft = trackPointerScrollStart - deltaX;
 });
 
 const releaseTrackPointer = () => {
   if (!isTrackPointerDown || !track) return;
+  const draggedDistance = Math.abs(track.scrollLeft - trackPointerScrollStart);
+  const didDrag = draggedDistance > TRACK_DRAG_THRESHOLD;
   isTrackPointerDown = false;
-  if (trackPointerId !== null) {
+  if (trackPointerCaptured && trackPointerId !== null) {
     try {
       track.releasePointerCapture?.(trackPointerId);
     } catch (error) {
       // ignore
     }
-    trackPointerId = null;
   }
+  trackPointerId = null;
+  trackPointerCaptured = false;
   track.classList.remove("dragging");
-  setTimeout(() => {
+  if (didDrag) {
+    trackWasDragged = true;
+    setTimeout(() => {
+      trackWasDragged = false;
+    }, 0);
+  } else {
     trackWasDragged = false;
-  }, 0);
+  }
 };
 
 track?.addEventListener("pointerup", releaseTrackPointer);
