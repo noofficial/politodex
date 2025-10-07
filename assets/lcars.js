@@ -1,5 +1,35 @@
 (function () {
   const redirectDelay = 180;
+  const currentScript = document.currentScript;
+  let appBasePath = "/";
+
+  if (currentScript) {
+    try {
+      const baseUrl = new URL("..", currentScript.src);
+      appBasePath = baseUrl.pathname;
+    } catch (error) {
+      console.warn("Unable to determine app base path", error);
+    }
+  }
+
+  function resolveHref(href) {
+    if (!href) return null;
+
+    const isProtocolRelative = href.startsWith("//");
+    const isAbsoluteUrl = /^[a-z][a-z0-9+.-]*:/i.test(href);
+    if (isAbsoluteUrl || isProtocolRelative) {
+      return href;
+    }
+
+    if (href.startsWith("/")) {
+      const normalizedBase = appBasePath.endsWith("/")
+        ? appBasePath.slice(0, -1)
+        : appBasePath;
+      return `${normalizedBase}${href}`;
+    }
+
+    return href;
+  }
 
   function safePlay(audio) {
     if (!audio) return;
@@ -17,9 +47,16 @@
   window.playSoundAndRedirect = function playSoundAndRedirect(audioId, href) {
     const audio = document.getElementById(audioId);
     safePlay(audio);
-    if (href) {
+    const targetHref = resolveHref(href);
+    if (targetHref) {
+      let destination = targetHref;
+      try {
+        destination = new URL(targetHref, window.location.href).href;
+      } catch (error) {
+        console.warn("Falling back to raw href navigation", error);
+      }
       window.setTimeout(() => {
-        window.location.href = href;
+        window.location.href = destination;
       }, redirectDelay);
     }
   };

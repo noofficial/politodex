@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Grotesk:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/theme/lower-decks-padd.css" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="../../theme/lower-decks-padd.css" />
+    <link rel="stylesheet" href="../../styles.css" />
   </head>
   <body class="wrap-all">
     <div class="lcars-hull">
@@ -24,7 +24,11 @@
         <header class="app-header banner">
           <div class="header-glow"></div>
           <div class="control-stack" role="group" aria-label="Primary controls">
-            <button type="button" class="lcars-button" onclick="playSoundAndRedirect('audio2', '/')">
+            <button
+              type="button"
+              class="lcars-button"
+              onclick="playSoundAndRedirect('audio2', '../../')"
+            >
               Back to Rolodex
             </button>
             <button type="button" class="lcars-button" onclick="topFunction()">Back to Top</button>
@@ -87,7 +91,7 @@
       </div>
     </div>
 
-    <script src="/assets/lcars.js"></script>
-    <script src="/script.js" type="module"></script>
+    <script src="../../assets/lcars.js"></script>
+    <script src="../../script.js" type="module"></script>
   </body>
 </html>
