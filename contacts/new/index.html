@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Politodex - New Contact</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Grotesk:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/theme/lower-decks-padd.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="wrap-all">
+    <div class="lcars-hull">
+      <aside class="left-frame" aria-hidden="true">
+        <div class="bar-panel"></div>
+      </aside>
+
+      <div class="lcars-main">
+        <div class="scanlines" aria-hidden="true"></div>
+        <header class="app-header banner">
+          <div class="header-glow"></div>
+          <div class="control-stack" role="group" aria-label="Primary controls">
+            <button type="button" class="lcars-button" onclick="playSoundAndRedirect('audio2', '/')">
+              Back to Rolodex
+            </button>
+            <button type="button" class="lcars-button" onclick="topFunction()">Back to Top</button>
+          </div>
+          <h1>New Contact</h1>
+          <p class="tagline">Input a fresh operative into your multiverse rolodex</p>
+        </header>
+
+        <main class="layout single-column bar-panel lcars-pad">
+          <section class="input-panel" aria-labelledby="new-contact-title">
+            <div class="panel-header">
+              <h2 id="new-contact-title">Add a new contact</h2>
+              <p>Log the operative's identifiers and strategic details.</p>
+            </div>
+            <form id="contact-form" class="contact-form">
+              <label class="field">
+                <span>Name</span>
+                <input type="text" name="name" required placeholder="Morty Smith" />
+              </label>
+
+              <label class="field">
+                <span>Company</span>
+                <input type="text" name="company" placeholder="Council of Ricks" />
+              </label>
+
+              <label class="field">
+                <span>Industry</span>
+                <input type="text" name="industry" placeholder="Interdimensional Politics" />
+              </label>
+
+              <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" placeholder="morty@citadel.gov" />
+              </label>
+
+              <label class="field">
+                <span>Phone</span>
+                <input type="tel" name="phone" placeholder="(555) 123-4567" />
+              </label>
+
+              <label class="field">
+                <span>Notes / Bio</span>
+                <textarea
+                  name="notes"
+                  rows="3"
+                  placeholder="Key ally for multiverse canvassing initiatives"
+                ></textarea>
+              </label>
+
+              <label class="field file-field">
+                <span>Portrait</span>
+                <input type="file" name="photo" accept="image/*" />
+                <div class="file-name" data-empty="No file selected">No file selected</div>
+              </label>
+
+              <button type="submit" class="submit-btn">Add contact</button>
+            </form>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="/assets/lcars.js"></script>
+    <script src="/script.js" type="module"></script>
+  </body>
+</html>

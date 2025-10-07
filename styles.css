@@ -1,0 +1,672 @@
+:root {
+  color-scheme: dark;
+  --bg: #031a24;
+  --bg-alt: #052d3b;
+  --accent: #38c6ff;
+  --accent-strong: #7df0ff;
+  --accent-soft: rgba(56, 198, 255, 0.35);
+  --text-primary: #d3f6ff;
+  --text-secondary: rgba(211, 246, 255, 0.7);
+  --panel-border: rgba(125, 240, 255, 0.45);
+  --card-border: rgba(56, 198, 255, 0.35);
+  --shadow: rgba(0, 0, 0, 0.35);
+  --scanline-color: rgba(0, 255, 255, 0.08);
+  font-size: clamp(16px, 0.6vw + 14px, 20px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  color: var(--text-primary);
+  background: radial-gradient(circle at top, #052c3a 0%, #020d14 70%);
+  overflow-x: hidden;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    var(--scanline-color) 3px
+  );
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.app-header {
+  position: relative;
+  padding: 3.5rem clamp(1.5rem, 3vw, 4rem) 2rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.header-glow {
+  position: absolute;
+  inset: 20% 20% auto;
+  height: 60%;
+  background: radial-gradient(circle, rgba(56, 198, 255, 0.4), transparent 70%);
+  filter: blur(30px);
+  z-index: -1;
+}
+
+h1 {
+  font-family: "Rajdhani", sans-serif;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  text-shadow: 0 0 25px rgba(56, 198, 255, 0.55);
+}
+
+@media (min-width: 961px) {
+  .home-header h1 {
+    transform: translateX(-8%);
+  }
+
+  .home-header .control-stack {
+    top: clamp(2.75rem, 4vw, 4rem);
+  }
+}
+
+.tagline {
+  margin: 0.5rem auto 0;
+  max-width: 30ch;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+}
+
+.layout {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  grid-template-columns: minmax(260px, 400px) minmax(0, 1fr);
+  padding: 0 clamp(1.5rem, 3vw, 4rem) clamp(3rem, 6vw, 5rem);
+}
+
+.layout.lcars-pad {
+  padding: clamp(1.25rem, 2vw, 2.25rem) clamp(1.75rem, 3vw, 3rem) clamp(4rem, 8vw, 6rem);
+}
+
+.layout.single-column {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel-header h2 {
+  font-family: "Rajdhani", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.panel-header p {
+  margin: 0.25rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.input-panel,
+.rolodex-panel {
+  position: relative;
+  border: 1px solid var(--panel-border);
+  border-radius: 1.5rem;
+  padding: clamp(1.5rem, 2.5vw, 2.75rem);
+  background: linear-gradient(135deg, rgba(3, 26, 36, 0.9), rgba(5, 45, 59, 0.72));
+  box-shadow: 0 30px 60px -25px var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.input-panel::before,
+.rolodex-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, rgba(56, 198, 255, 0.6), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.contact-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.form-redirect {
+  margin-top: 1.75rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.form-redirect strong {
+  color: var(--accent-strong);
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--text-secondary);
+}
+
+.field input,
+.field textarea {
+  background: rgba(4, 42, 57, 0.7);
+  border: 1px solid rgba(56, 198, 255, 0.25);
+  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 15px rgba(56, 198, 255, 0.35);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.file-field {
+  position: relative;
+}
+
+.file-field input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.file-name {
+  border: 1px dashed rgba(56, 198, 255, 0.4);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: none;
+}
+
+.file-name:not([data-empty="true"]) {
+  color: var(--accent-strong);
+}
+
+.submit-btn {
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.8rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(56, 198, 255, 0.8), rgba(125, 240, 255, 0.5));
+  color: #04232f;
+  box-shadow: 0 12px 25px -12px rgba(56, 198, 255, 0.65);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-btn:hover,
+.submit-btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 35px -18px rgba(125, 240, 255, 0.75);
+}
+
+.carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 1.5rem;
+}
+
+.card-track {
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1.5rem 0;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.card-track::-webkit-scrollbar {
+  height: 10px;
+}
+
+.card-track::-webkit-scrollbar-thumb {
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
+.card-track.dragging {
+  cursor: grabbing;
+}
+
+.nav-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 198, 255, 0.3);
+  background: rgba(3, 26, 36, 0.7);
+  color: var(--accent-strong);
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.nav-button:hover,
+.nav-button:focus-visible {
+  transform: scale(1.05);
+  background: rgba(56, 198, 255, 0.25);
+}
+
+.contact-card {
+  position: relative;
+  width: clamp(220px, 20vw, 260px);
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  border-radius: 1.25rem;
+  background: rgba(4, 45, 59, 0.85);
+  border: 1px solid var(--card-border);
+  padding: 1px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateY(0deg);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 30px 55px -35px rgba(56, 198, 255, 0.65);
+  cursor: pointer;
+}
+
+.contact-card:focus-visible {
+  outline: 3px solid var(--accent-strong);
+  outline-offset: 3px;
+}
+
+.contact-card:hover {
+  transform: perspective(900px) rotateY(-10deg) translateY(-6px);
+  box-shadow: 0 45px 90px -45px rgba(125, 240, 255, 0.9);
+}
+
+.card-glow {
+  position: absolute;
+  inset: -40% -40% 40%;
+  background: radial-gradient(circle at top, rgba(125, 240, 255, 0.5), transparent 70%);
+  filter: blur(35px);
+  z-index: 0;
+}
+
+.card-inner {
+  position: relative;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(3, 26, 36, 0.95), rgba(3, 26, 36, 0.6));
+  padding: 1.2rem;
+  display: grid;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.portrait-frame {
+  height: 160px;
+  border-radius: 1rem;
+  background: rgba(4, 42, 57, 0.9);
+  border: 1px solid rgba(56, 198, 255, 0.4);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-details {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.contact-name {
+  margin: 0;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.meta {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+
+.contact-info {
+  margin: 0;
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.contact-info div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.6rem;
+}
+
+.contact-info dt {
+  font-family: "Rajdhani", sans-serif;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  letter-spacing: 0.18em;
+}
+
+.contact-info dd {
+  margin: 0;
+  color: var(--text-secondary);
+  word-break: break-word;
+}
+
+.notes {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-secondary);
+}
+
+.search-bar {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+#contact-search {
+  width: min(260px, 100%);
+  background: rgba(4, 42, 57, 0.7);
+  border: 1px solid rgba(56, 198, 255, 0.25);
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+}
+
+#contact-search:focus {
+  outline: none;
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 12px rgba(56, 198, 255, 0.4);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.empty-state {
+  min-width: 220px;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(56, 198, 255, 0.2);
+  background: rgba(3, 26, 36, 0.75);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+}
+
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(3, 14, 20, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.contact-modal[hidden] {
+  display: none;
+}
+
+.contact-modal__dialog {
+  position: relative;
+  width: min(640px, 92vw);
+  border-radius: 1.5rem;
+  background: linear-gradient(135deg, rgba(3, 26, 36, 0.95), rgba(5, 45, 59, 0.78));
+  border: 1px solid rgba(125, 240, 255, 0.45);
+  box-shadow: 0 45px 90px -45px rgba(56, 198, 255, 0.8);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--text-primary);
+  z-index: 1;
+}
+
+.contact-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: transparent;
+  z-index: 0;
+}
+
+.contact-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--accent-strong);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.contact-modal__content {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  z-index: 1;
+}
+
+.contact-modal__summary {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.contact-modal__portrait {
+  width: 140px;
+  height: 140px;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(56, 198, 255, 0.4);
+}
+
+.contact-modal__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-modal__titles h2 {
+  margin: 0;
+  font-family: "Rajdhani", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contact-modal__titles p {
+  margin: 0.2rem 0 0;
+  color: var(--text-secondary);
+  letter-spacing: 0.14em;
+  font-size: 0.9rem;
+}
+
+.contact-modal__edit {
+  justify-self: end;
+}
+
+.contact-modal__details {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.contact-modal__details div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.contact-modal__details dt {
+  font-family: "Rajdhani", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent-strong);
+}
+
+.contact-modal__details dd {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.contact-modal__details a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-modal__details a:hover,
+.contact-modal__details a:focus-visible {
+  text-decoration: underline;
+}
+
+.contact-modal__notes {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.contact-modal__form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.contact-modal__fields {
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-modal__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.lcars-button.ghost {
+  background: transparent;
+  border: 1px solid rgba(125, 240, 255, 0.4);
+  color: var(--accent-strong);
+}
+
+.contact-modal__email.is-disabled,
+.contact-modal__phone.is-disabled {
+  pointer-events: none;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+@media (max-width: 720px) {
+  .contact-modal__summary {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .contact-modal__edit {
+    justify-self: center;
+  }
+
+  .contact-modal__details div {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.legend-swatch {
+  width: 32px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), rgba(125, 240, 255, 0.6));
+  box-shadow: 0 0 18px rgba(125, 240, 255, 0.65);
+}
+
+@media (max-width: 600px) {
+  .contact-card {
+    width: 200px;
+  }
+
+  .portrait-frame {
+    height: 140px;
+  }
+}

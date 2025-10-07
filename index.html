@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Politodex - Campaign Contact Rolodex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Space+Grotesk:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="theme/lower-decks-padd.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="wrap-all">
+    <div class="lcars-hull">
+      <aside class="left-frame" aria-hidden="true">
+        <div class="bar-panel"></div>
+      </aside>
+
+      <div class="lcars-main">
+        <div class="scanlines" aria-hidden="true"></div>
+        <header class="app-header banner home-header">
+          <div class="header-glow"></div>
+          <div class="control-stack" role="group" aria-label="Primary controls">
+            <button
+              type="button"
+              class="lcars-button"
+              onclick="playSoundAndRedirect('audio2', '/contacts/new/')"
+            >
+              New Contact
+            </button>
+            <button type="button" class="lcars-button" onclick="topFunction()">Back to Top</button>
+          </div>
+          <h1>Politodex</h1>
+        </header>
+
+        <main class="layout single-column bar-panel lcars-pad">
+          <section class="rolodex-panel">
+            <div class="carousel" role="list" aria-live="polite">
+              <div class="card-track" id="contact-track"></div>
+            </div>
+
+            <div class="search-bar">
+              <label for="contact-search" class="visually-hidden">Search contacts by name</label>
+              <input
+                type="search"
+                id="contact-search"
+                name="contact-search"
+                placeholder="Search contacts"
+                autocomplete="off"
+              />
+            </div>
+          </section>
+        </main>
+
+        <template id="contact-card-template">
+          <article class="contact-card" role="button" aria-haspopup="dialog" tabindex="0">
+            <div class="card-glow"></div>
+            <div class="card-inner">
+              <div class="portrait-frame">
+                <img class="portrait" alt="" loading="lazy" />
+              </div>
+              <div class="card-details">
+                <h3 class="contact-name"></h3>
+                <p class="meta"><span class="company"></span></p>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+    </div>
+
+    <div id="contact-modal" class="contact-modal" hidden>
+      <div class="contact-modal__backdrop" data-close></div>
+      <div class="contact-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="contact-modal-name">
+        <button type="button" class="contact-modal__close" data-close aria-label="Close contact details">
+          ×
+        </button>
+        <div class="contact-modal__content">
+          <div class="contact-modal__view">
+            <div class="contact-modal__summary">
+              <div class="contact-modal__portrait">
+                <img id="contact-modal-portrait" alt="" />
+              </div>
+              <div class="contact-modal__titles">
+                <h2 class="contact-modal__name" id="contact-modal-name"></h2>
+                <p class="contact-modal__company"></p>
+                <p class="contact-modal__industry"></p>
+              </div>
+              <button type="button" class="lcars-button contact-modal__edit" data-edit>Edit</button>
+            </div>
+            <dl class="contact-modal__details">
+              <div>
+                <dt>Email</dt>
+                <dd><a class="contact-modal__email"></a></dd>
+              </div>
+              <div>
+                <dt>Phone</dt>
+                <dd><a class="contact-modal__phone"></a></dd>
+              </div>
+            </dl>
+            <p class="contact-modal__notes"></p>
+          </div>
+
+          <form id="edit-form" class="contact-modal__form" hidden>
+            <div class="contact-modal__fields">
+              <label class="field">
+                <span>Name</span>
+                <input type="text" name="name" required />
+              </label>
+              <label class="field">
+                <span>Company</span>
+                <input type="text" name="company" />
+              </label>
+              <label class="field">
+                <span>Industry</span>
+                <input type="text" name="industry" />
+              </label>
+              <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" />
+              </label>
+              <label class="field">
+                <span>Phone</span>
+                <input type="tel" name="phone" />
+              </label>
+              <label class="field">
+                <span>Notes / Bio</span>
+                <textarea name="notes" rows="3"></textarea>
+              </label>
+              <label class="field file-field">
+                <span>Portrait</span>
+                <input type="file" name="photo" accept="image/*" />
+                <div class="file-name" data-empty="true">No file selected</div>
+              </label>
+            </div>
+            <div class="contact-modal__actions">
+              <button type="button" class="lcars-button ghost" data-cancel-edit>Cancel</button>
+              <button type="submit" class="lcars-button">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="/assets/lcars.js"></script>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
