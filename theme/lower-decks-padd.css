@@ -191,3 +191,31 @@ body.wrap-all {
     display: none;
   }
 }
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .left-frame {
+    width: clamp(140px, 18vw, 190px);
+    padding: 1.25rem 1rem;
+  }
+
+  .left-frame .bar-panel {
+    margin: 3rem 0;
+  }
+
+  .control-stack {
+    top: 1rem;
+    right: clamp(0.75rem, 2.5vw, 2rem);
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.6rem;
+  }
+
+  .lcars-button {
+    padding: 0.45rem 1.15rem;
+    font-size: 0.7rem;
+  }
+
+  .banner {
+    padding-right: clamp(1rem, 3vw, 2.25rem);
+  }
+}
