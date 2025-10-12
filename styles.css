@@ -479,6 +479,7 @@ textarea {
 .contact-modal__dialog {
   position: relative;
   width: min(640px, 92vw);
+  max-height: min(92vh, 720px);
   border-radius: 1.5rem;
   background: linear-gradient(135deg, rgba(3, 26, 36, 0.95), rgba(5, 45, 59, 0.78));
   border: 1px solid rgba(125, 240, 255, 0.45);
@@ -486,6 +487,7 @@ textarea {
   padding: clamp(1.5rem, 3vw, 2.5rem);
   color: var(--text-primary);
   z-index: 1;
+  overflow: auto;
 }
 
 .contact-modal__backdrop {
@@ -668,5 +670,77 @@ textarea {
 
   .portrait-frame {
     height: 140px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 540px) {
+  :root {
+    font-size: clamp(15px, 1.6vh + 10px, 18px);
+  }
+
+  .lcars-hull {
+    min-height: 100vh;
+  }
+
+  .app-header {
+    padding: 2rem clamp(1rem, 3vw, 2.5rem) 1.25rem;
+  }
+
+  .home-header h1 {
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+  }
+
+  .home-header .control-stack {
+    top: 1.25rem;
+    right: clamp(1rem, 3vw, 2.5rem);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .layout {
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .layout.lcars-pad {
+    padding: clamp(1rem, 2vh + 0.75rem, 1.75rem) clamp(1.1rem, 3vw, 1.75rem)
+      clamp(2rem, 4vh + 1rem, 3rem);
+  }
+
+  .rolodex-panel {
+    padding: clamp(1.1rem, 2.5vw, 2rem);
+  }
+
+  .carousel {
+    margin-top: 1rem;
+  }
+
+  .card-track {
+    gap: 1.1rem;
+    padding: 1rem 0;
+  }
+
+  .contact-card {
+    width: clamp(210px, 28vw, 260px);
+  }
+
+  .card-inner {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .portrait-frame {
+    height: 130px;
+  }
+
+  .search-bar {
+    margin-top: 0.75rem;
+  }
+
+  #contact-search {
+    width: min(320px, 100%);
+  }
+
+  .contact-modal__dialog {
+    max-height: min(88vh, 640px);
   }
 }
